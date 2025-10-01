@@ -713,6 +713,10 @@ section h1.in-view::after {
         gap: 15px;
     }
 
+    .container{
+        height: 60vh;
+    }
+
     .home-text {
         text-align: center;
         padding: 10px;
@@ -746,4 +750,12 @@ section h1.in-view::after {
         padding: 10px 15px;
         font-size: 0.9rem;
     }
+
+    section h1{
+    margin: 0 auto 50px;
+    font-size: 2.3rem;
+    position: relative;      
+    display: inline-block;
+    }
+
 }
