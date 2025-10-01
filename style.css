@@ -714,7 +714,7 @@ section h1.in-view::after {
     }
 
     .container{
-        height: 80vh;
+        height: 100vh;
     }
 
     .home-text {
@@ -759,3 +759,4 @@ section h1.in-view::after {
     }
 
 }
+
