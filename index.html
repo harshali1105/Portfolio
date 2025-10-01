@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 </head>
@@ -12,10 +12,8 @@
 <body>
     <div class="nav">
         <div class="logo">Portfolio</div>
-        <div class="menu-toggle" id="menu-toggle">
-            <i class="fa-solid fa-bars"></i>
-        </div>
-        <ul>
+        <i id="menu-toggle" class="fas fa-bars"></i>
+        <ul id="nav-links">
             <a href="#home">Home</a>
             <a href="#about">About</a>
             <a href="#education">Education</a>
@@ -294,106 +292,116 @@
         <p>© 2025 Harshali Khair. All Rights Reserved.</p>
     </footer>
     <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // ===== Hamburger Toggle =====
-        const toggleBtn = document.getElementById("menu-toggle");
-        const navLinks = document.querySelector(".nav ul");
+        document.addEventListener("DOMContentLoaded", () => {
+            // ===== Hamburger Toggle =====
+                const toggleBtn = document.getElementById("menu-toggle");
+                const navLinks = document.getElementById("nav-links");
 
-        toggleBtn.addEventListener("click", () => {
-        navLinks.classList.toggle("show");
-        
+                toggleBtn.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                    toggleBtn.classList.toggle('fa-times');
+                    toggleBtn.classList.toggle('fa-bars');
+                });
+
+                document.querySelectorAll('.nav ul a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                        toggleBtn.classList.remove('fa-times');
+                        toggleBtn.classList.add('fa-bars');
+                    });
+                });
+
+
+            // ===== Underline animation for all section h1 =====
+            const headings = document.querySelectorAll("section h1");
+            const headingObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("in-view");
+                        headingObserver.unobserve(entry.target); // Animate only once
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            headings.forEach(h1 => headingObserver.observe(h1));
+
+            // ===== Fade-in for About paragraphs =====
+            const aboutParas = document.querySelectorAll(".aboutMe p");
+            const paraObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("show");
+                        paraObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            aboutParas.forEach(p => paraObserver.observe(p));
+
+            // ===== Education card fade-in =====
+            const eduCards = document.querySelectorAll(".edu-card");
+            const cardObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("fade-in");
+                        cardObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            eduCards.forEach(card => cardObserver.observe(card));
+
+            // ===== Projects card fade-in =====
+            const projectCards = document.querySelectorAll(".project-card");
+            const projectObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("in-view");
+                        projectObserver.unobserve(entry.target); // animate only once
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            projectCards.forEach(card => projectObserver.observe(card));
+
+            // ===== Certifications card fade-in =====
+            const certElements = document.querySelectorAll('.cert-card');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            certElements.forEach(el => observer.observe(el));
+
+            // ===== Skills card fade-in + progress bar =====
+            const skillCards = document.querySelectorAll(".skill-card");
+            const skillObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const card = entry.target;
+
+                        // Fade-in card
+                        card.classList.add("fade-in");
+
+                        // Animate skill bar
+                        const fill = card.querySelector(".skill-fill");
+                        const percentSpan = card.querySelector(".skill-percent");
+                        const percent = fill.getAttribute("data-percent");
+
+                        fill.style.width = percent;
+                        percentSpan.textContent = percent;
+
+                        skillObserver.unobserve(card);
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            skillCards.forEach(card => skillObserver.observe(card));
         });
-
-        // ===== Underline animation for all section h1 =====
-        const headings = document.querySelectorAll("section h1");
-        const headingObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("in-view");
-                    headingObserver.unobserve(entry.target); // Animate only once
-                }
-            });
-        }, { threshold: 0.3 });
-
-        headings.forEach(h1 => headingObserver.observe(h1));
-
-        // ===== Fade-in for About paragraphs =====
-        const aboutParas = document.querySelectorAll(".aboutMe p");
-        const paraObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("show");
-                    paraObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.3 });
-
-        aboutParas.forEach(p => paraObserver.observe(p));
-
-        // ===== Education card fade-in =====
-        const eduCards = document.querySelectorAll(".edu-card");
-        const cardObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("fade-in");
-                    cardObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.2 });
-
-        eduCards.forEach(card => cardObserver.observe(card));
-
-        // ===== Projects card fade-in =====
-        const projectCards = document.querySelectorAll(".project-card");
-        const projectObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("in-view");
-                    projectObserver.unobserve(entry.target); // animate only once
-                }
-            });
-        }, { threshold: 0.2 });
-
-        projectCards.forEach(card => projectObserver.observe(card));
-
-        // ===== Certifications card fade-in =====
-        const certElements = document.querySelectorAll('.cert-card');
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                }
-            });
-        }, { threshold: 0.2 });
-
-        certElements.forEach(el => observer.observe(el));
-
-        // ===== Skills card fade-in + progress bar =====
-        const skillCards = document.querySelectorAll(".skill-card");
-        const skillObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const card = entry.target;
-
-                    // Fade-in card
-                    card.classList.add("fade-in");
-
-                    // Animate skill bar
-                    const fill = card.querySelector(".skill-fill");
-                    const percentSpan = card.querySelector(".skill-percent");
-                    const percent = fill.getAttribute("data-percent");
-
-                    fill.style.width = percent;
-                    percentSpan.textContent = percent;
-
-                    skillObserver.unobserve(card);
-                }
-            });
-        }, { threshold: 0.3 });
-
-        skillCards.forEach(card => skillObserver.observe(card));
-    });
-</script>
+    </script>
 
 </body>
 
